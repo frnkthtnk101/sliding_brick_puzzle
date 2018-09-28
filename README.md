@@ -54,7 +54,7 @@ Assignments and requirements
         1) Create the ground work for the Sliding Brick Puzzle.
         2) State Representation: The program needs to read a file and outputs the game state
         to the terminal. The program needs to clones as state. The clone state needs to return
-        the state of the game identical to the current instance.
+        the state of the game identical to the current instance. [done]
         3) Puzzle Complete Check: the program needs to check if the puzzle is solved.
         4) Move Generation: The Program needs the ability to move blocks.
             -The program needs to return all available moves that one piece can perform
