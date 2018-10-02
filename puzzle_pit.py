@@ -1,3 +1,5 @@
+from block import block
+from move import move
 class puzzle_pit:
     def __init__(self, content):
         self.width = content[0]
@@ -11,8 +13,11 @@ class puzzle_pit:
                 k += 1
                 j += 1
 
-    def to_string(self):
-        temp = str(self.width) + "," + str(self.height) + ",\n"
+    def to_string(self, dimensions = True):
+        if(dimensions):
+            temp = str(self.width) + "," + str(self.height) + ",\n"
+        else:
+            temp = ''
         for i in range(0, self.height):
             for j in range(0, self.width):
                 temp += str(self.matrix[i][j])+","
@@ -26,7 +31,36 @@ class puzzle_pit:
     def is_completed(self):
         return "-1" not in self.to_string()
     
-    def move(block, direction):
+    def predict_moves(self):
+        copy_matrix = self.clone()
+        blocks = get_blocks(copy_matrix)
+        moves = []
+        for b in blocks:
+            directions = [0,0,0,0] #<∨^>
+            directions[0] = try_left(b, copy_matrix)
+            directions[1] = try_down(b, copy_matrix)
+            directions[2] = try_up(b, copy_matrix)
+            directions[3] = try_right(b, copy_matrix)
+            moves.append(move(b.,directions))
+            
+    
+    def get_blocks(self):
+        blocks = []
+        i = 2
+        while i in self.clone():
+            j = 0
+            for b in self.matrix:
+                if i is b:
+                    j += 1
+            blocks.append(block(j,i))
+            i += 1
+        retrun blocks
+
+        
+        
+        
+    
+ '''   def move(block, direction):
         '''
            h - left
            j - down
@@ -41,6 +75,7 @@ class puzzle_pit:
             if direction == 'h':
                 for cord in cordinates:
                     if validate( cord[0], cord[1]):
+                               
                         
 
         else:
@@ -57,8 +92,9 @@ class puzzle_pit:
     def validate(self, y, x):
         return 0 <= y < self.height and 0 <= x < self.width 
 
-    def move(self, matrix , original_y, original_x, new_y, new_x, block):
+    def set_block(self, matrix , original_y, original_x, new_y, new_x, block):
         matrix[new_y][new_x] += matrix[original_y][original_y]
         matrix[original_y][original_y] = 0
         return matrix
 
+''''
