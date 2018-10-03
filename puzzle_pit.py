@@ -31,57 +31,56 @@ class puzzle_pit:
     def is_completed(self):
         return "-1" not in self.to_string()
     
-    def predict_moves(self):
-        copy_matrix = self.clone()
-        blocks = get_blocks(copy_matrix)
+    def predict_moves(self, copy_matrix):
+        blocks = self.get_blocks()
         moves = []
         for b in blocks:
             directions = [False,False,False,False] #<∨^>
-            directions[0] = try_left(b, copy_matrix)
-            directions[1] = try_down(b, copy_matrix)
-            directions[2] = try_up(b, copy_matrix)
-            directions[3] = try_right(b, copy_matrix)
+            directions[0] = self.try_left(b, copy_matrix)
+            directions[1] = self.try_down(b, copy_matrix)
+            directions[2] = self.try_up(b, copy_matrix)
+            directions[3] = self.try_right(b, copy_matrix)
             moves.append(move(b.number,directions))
         return moves
 
     def in_range(self, x_axis, y_axis):
         return 0 <= x_axis <= self.width and 0 <= y_axis <= self.height
 
-    def try_left(self, block, matrix):
-        for x in range(0,len(matrix)) 
-            for y in range(0,len(matrix[0])):
-                if matrix[x][y] == block.number and in_range(x,y-1):
-                    matrix[x][y-1] = block.number
-                    matrix[x][y] = 0
-        return possible_move(matrix, block)
+    def try_left(self, block, t_matrix):
+        for x in range(0,len(t_matrix)): 
+            for y in range(0,len(t_matrix[0])):
+                if t_matrix[x][y] == block.number and self.in_range(x,y-1):
+                    t_matrix[x][y-1] = block.number
+                    t_matrix[x][y] = 0
+        return self.possible_move(t_matrix, block)
     
-    def try_down(self, block, matrix):
-        for x in range(len(matrix),0) 
-            for y in range(len(matrix[0]),0):
-                if matrix[x][y] == block.number and in_range(x+1,y):
-                    matrix[x+1][y] = block.number
-                    matrix[x][y] = 0
-        return possible_move(matrix, block)
+    def try_down(self, block, t_matrix):
+        for x in range(len(t_matrix),0): 
+            for y in range(len(t_matrix[0]),0):
+                if t_matrix[x][y] == block.number and self.in_range(x+1,y):
+                    t_matrix[x+1][y] = block.number
+                    t_matrix[x][y] = 0
+        return self.possible_move(t_matrix, block)
     
-    def try_up(self, block, matrix):
-        for x in range(0,len(matrix)) 
-            for y in range(0,len(matrix[0])):
-                if matrix[x][y] == block.number and in_range(x-1,y):
-                    matrix[x-1][y] = block.number
-                    matrix[x][y] = 0
-        return possible_move(matrix, block)
+    def try_up(self, block, t_matrix):
+        for x in range(0,len(t_matrix)): 
+            for y in range(0,len(t_matrix[0])):
+                if t_matrix[x][y] == block.number and self.in_range(x-1,y):
+                    t_matrix[x-1][y] = block.number
+                    t_matrix[x][y] = 0
+        return self.possible_move(t_matrix, block)
     
-    def try_right(self, block, matrix):
-        for x in range(len(matrix),0) 
-            for y in range(len(matrix[0]),0):
-                if matrix[x][y] == block.number and in_range(x,y+1):
-                    matrix[x][y+1] = block.number
-                    matrix[x][y] = 0
-        return possible_move(matrix, block)
+    def try_right(self, block, t_matrix):
+        for x in range(len(t_matrix),0): 
+            for y in range(len(t_matrix[0]),0):
+                if t_matrix[x][y] == block.number and self.in_range(x,y+1):
+                    t_matrix[x][y+1] = block.number
+                    t_matrix[x][y] = 0
+        return self.possible_move(t_matrix, block)
     
-    def possible_move(self, matrix, block):
+    def possible_move(self, t_matrix, block):
         number_count = 0
-        for row in matrix:
+        for row in t_matrix:
             for number in row:
                 if block.number == number:
                     number_count += 1
@@ -90,10 +89,10 @@ class puzzle_pit:
     def get_blocks(self):
         blocks = []
         i = 2
-        while i in self.clone():
+        while str(i) in str(self.to_string(False)):
             j = 0
             for b in self.matrix:
-                if i is b:
+                if i in b:
                     j += 1
             blocks.append(block(j,i))
             i += 1

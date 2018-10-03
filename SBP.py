@@ -8,10 +8,10 @@ def main(file_path):
     pit = puzzle_pit(content)
     if content is None:
         print("no good")
-    else:
+    else:         
         print(pit.to_string())
         print(pit.is_completed())
-        print(pit.predict_moves())
+        print(pit.predict_moves(pit.clone()))
 
 
 if __name__ == "__main__":
