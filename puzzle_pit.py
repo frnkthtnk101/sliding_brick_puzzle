@@ -36,14 +36,57 @@ class puzzle_pit:
         blocks = get_blocks(copy_matrix)
         moves = []
         for b in blocks:
-            directions = [0,0,0,0] #<∨^>
+            directions = [False,False,False,False] #<∨^>
             directions[0] = try_left(b, copy_matrix)
             directions[1] = try_down(b, copy_matrix)
             directions[2] = try_up(b, copy_matrix)
             directions[3] = try_right(b, copy_matrix)
-            moves.append(move(b.,directions))
-            
+            moves.append(move(b.number,directions))
+        return moves
+
+    def in_range(self, x_axis, y_axis):
+        return 0 <= x_axis <= self.width and 0 <= y_axis <= self.height
+
+    def try_left(self, block, matrix):
+        for x in range(0,len(matrix)) 
+            for y in range(0,len(matrix[0])):
+                if matrix[x][y] == block.number and in_range(x,y-1):
+                    matrix[x][y-1] = block.number
+                    matrix[x][y] = 0
+        return possible_move(matrix, block)
     
+    def try_down(self, block, matrix):
+        for x in range(len(matrix),0) 
+            for y in range(len(matrix[0]),0):
+                if matrix[x][y] == block.number and in_range(x+1,y):
+                    matrix[x+1][y] = block.number
+                    matrix[x][y] = 0
+        return possible_move(matrix, block)
+    
+    def try_up(self, block, matrix):
+        for x in range(0,len(matrix)) 
+            for y in range(0,len(matrix[0])):
+                if matrix[x][y] == block.number and in_range(x-1,y):
+                    matrix[x-1][y] = block.number
+                    matrix[x][y] = 0
+        return possible_move(matrix, block)
+    
+    def try_right(self, block, matrix):
+        for x in range(len(matrix),0) 
+            for y in range(len(matrix[0]),0):
+                if matrix[x][y] == block.number and in_range(x,y+1):
+                    matrix[x][y+1] = block.number
+                    matrix[x][y] = 0
+        return possible_move(matrix, block)
+    
+    def possible_move(self, matrix, block):
+        number_count = 0
+        for row in matrix:
+            for number in row:
+                if block.number == number:
+                    number_count += 1
+        return number_count == block.number_of_spots
+
     def get_blocks(self):
         blocks = []
         i = 2
@@ -54,47 +97,4 @@ class puzzle_pit:
                     j += 1
             blocks.append(block(j,i))
             i += 1
-        retrun blocks
-
-        
-        
-        
-    
- '''   def move(block, direction):
-        '''
-           h - left
-           j - down
-           k - up
-           l - right
-        '''
-        temp_matrix = self.clone()
-        #validate block
-        move_possible = False
-        if block in self.to_string():
-            cordinates = self.getblock(block)
-            if direction == 'h':
-                for cord in cordinates:
-                    if validate( cord[0], cord[1]):
-                               
-                        
-
-        else:
-            print("invalid block") 
-    
-    def getblock(self, block):
-        cords = []
-        for i in range(0, self.height):
-            for j in range(0, self.width):
-                if self.matrix[i][j] == block:
-                    cords.append([i,j])
-        return cords
-
-    def validate(self, y, x):
-        return 0 <= y < self.height and 0 <= x < self.width 
-
-    def set_block(self, matrix , original_y, original_x, new_y, new_x, block):
-        matrix[new_y][new_x] += matrix[original_y][original_y]
-        matrix[original_y][original_y] = 0
-        return matrix
-
-''''
+        return blocks

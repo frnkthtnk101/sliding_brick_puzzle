@@ -11,6 +11,7 @@ def main(file_path):
     else:
         print(pit.to_string())
         print(pit.is_completed())
+        print(pit.predict_moves())
 
 
 if __name__ == "__main__":
