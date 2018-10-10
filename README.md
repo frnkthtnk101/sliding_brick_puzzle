@@ -62,8 +62,8 @@ Assignments and requirements
             -ApplyMove() performs the move given the state of the board [done]
             -ApplyuMoveCloning() clones the state of the map and then applies the move [done]
         5) State Comparison: the program needs to compare the state of machine to the previous
-            state.
-        6) Normalization: follow program
+            state. [done]
+        6) Normalization: follow pdf [done]
         7) Random Walks: the program needs to do
             -generate all moves that can be executed on the board in its current state.
             -select one at random.
