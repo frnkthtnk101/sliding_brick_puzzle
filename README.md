@@ -57,10 +57,10 @@ Assignments and requirements
         the state of the game identical to the current instance. [done]
         3) Puzzle Complete Check: the program needs to check if the puzzle is solved. [done]
         4) Move Generation: The Program needs the ability to move blocks.
-            -The program needs to return all available moves that one piece can perform
-            -The program needs to return all abailable moves that can happen on the board
-            -ApplyMove() performs the move given the state of the board
-            -ApplyuMoveCloning() clones the state of the map and then applies the move
+            -The program needs to return all available moves that one piece can perform [done]
+            -The program needs to return all abailable moves that can happen on the board [done]
+            -ApplyMove() performs the move given the state of the board [done]
+            -ApplyuMoveCloning() clones the state of the map and then applies the move [done]
         5) State Comparison: the program needs to compare the state of machine to the previous
             state.
         6) Normalization: follow program
