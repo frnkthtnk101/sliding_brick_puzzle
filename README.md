@@ -64,7 +64,7 @@ Assignments and requirements
         5) State Comparison: the program needs to compare the state of machine to the previous
             state. [done]
         6) Normalization: follow pdf [done]
-        7) Random Walks: the program needs to do
+        7) Random Walks: the program needs to do [done]
             -generate all moves that can be executed on the board in its current state.
             -select one at random.
             -execute the path.

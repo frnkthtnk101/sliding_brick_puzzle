@@ -20,7 +20,7 @@ def normalize(matrix):
             elif matrix[x][y] > next_id:
                 swap_id_x(next_id,matrix[x][y])
                 next_id+= 1
-    print_matrix_test()
+    return matrix
 
 def compare(new_state, old_state):
     for i in range(len(new_state)):

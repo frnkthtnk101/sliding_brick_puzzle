@@ -12,7 +12,8 @@
             "program": "${workspaceFolder}/sbp.py",
             "console": "integratedTerminal",
             "args": [
-                "/Users/francopettigrosso/Desktop/HW1/SBP-test-not-normalized.txt"
+                "/Users/francopettigrosso/Desktop/HW1/SBP-level0.txt",
+                "random"
             ]
         },
         {

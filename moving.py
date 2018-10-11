@@ -6,11 +6,15 @@ def predict_moves(copy_matrix, height, width, pit_string):
     blocks = get_blocks(copy_matrix, pit_string)
     moves = []
     for b in blocks:
-        directions = [False,False,False,False] #<∨^>
-        directions[0] = try_left(b, deepcopy(copy_matrix), height, width)
-        directions[1] = try_down(b, deepcopy(copy_matrix), height, width)
-        directions[2] = try_up(b, deepcopy(copy_matrix), height, width)
-        directions[3] = try_right(b, deepcopy(copy_matrix), height, width)
+        directions = [] #<∨^>
+        if try_left(b, deepcopy(copy_matrix), height, width):
+            directions.append('<')
+        if try_down(b, deepcopy(copy_matrix), height, width):
+            directions.append('v')
+        if try_up(b, deepcopy(copy_matrix), height, width):
+            directions.append('^')
+        if try_right(b, deepcopy(copy_matrix), height, width):
+            directions.append('>')
         moves.append(move(b.number,directions))
     return moves
 
@@ -23,7 +27,7 @@ def try_left( block, matrix, height, width):
             if matrix[x][y] == block.number and in_range(x,y-1, height, width):
                 matrix[x][y-1] += block.number
                 matrix[x][y] = 0
-    return possible_move(matrix, block)
+    return possible_move(matrix, block, height, width)
 
 def try_down( block, matrix, height, width):
     for x in range(len(matrix) - 1, 0, -1): 
@@ -31,7 +35,7 @@ def try_down( block, matrix, height, width):
             if matrix[x][y] == block.number and in_range(x+1,y, height, width):
                 matrix[x+1][y] += block.number
                 matrix[x][y] = 0
-    return possible_move(matrix, block)
+    return possible_move(matrix, block, height, width)
 
 def try_up(block, matrix, height, width):
     for x in range(0, len(matrix)): 
@@ -39,7 +43,7 @@ def try_up(block, matrix, height, width):
             if matrix[x][y] == block.number and in_range(x-1, y, height, width):
                 matrix[x-1][y] += block.number
                 matrix[x][y] = 0
-    return possible_move(matrix, block)
+    return possible_move(matrix, block, height, width)
 
 def try_right(block, matrix, height, width):
     for x in range(len(matrix) - 1, 0, -1): 
@@ -47,10 +51,19 @@ def try_right(block, matrix, height, width):
             if matrix[x][y] == block.number and in_range(x, y + 1, height, width):
                 matrix[x][y + 1] += block.number
                 matrix[x][y] = 0
-    return possible_move(matrix, block)
+    return possible_move(matrix, block, height, width)
 
-def possible_move(matrix, block):
+def possible_move(matrix, block, height, width):
     number_count = 0
+    if block.number == 2:
+        for row in matrix:
+            for number in row:
+                if number == 1:
+                    number_count += 1
+        if (2 * height + 2 * width)-4 == number_count:
+            return True
+        else:
+            number_count = 0
     for row in matrix:
         for number in row:
             if block.number == number:
@@ -69,3 +82,10 @@ def get_blocks(matrix, pit_string):
         blocks.append(block(j,i))
         i += 1
     return blocks
+
+def biggest_bloc(moves):
+    biggest_number = 3
+    for m in moves:
+        if m.number > biggest_number:
+            biggest_number = m.number
+    return biggest_number
