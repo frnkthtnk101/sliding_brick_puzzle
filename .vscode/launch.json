@@ -13,7 +13,7 @@
             "console": "integratedTerminal",
             "args": [
                 "/Users/francopettigrosso/Desktop/HW1/SBP-level0.txt",
-                "iterative"
+                "breadth"
             ]
         },
         {
