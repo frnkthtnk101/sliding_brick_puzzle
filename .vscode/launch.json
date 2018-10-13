@@ -12,8 +12,8 @@
             "program": "${workspaceFolder}/sbp.py",
             "console": "integratedTerminal",
             "args": [
-                "/Users/francopettigrosso/Desktop/HW1/SBP-level0.txt",
-                "random"
+                "/Users/francopettigrosso/Desktop/HW1/SBP-level1.txt",
+                "breadth"
             ]
         },
         {

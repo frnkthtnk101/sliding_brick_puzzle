@@ -71,8 +71,8 @@ Assignments and requirements
             -normalizes the cosequences of that action to the state
             -see if it reached the goal
     P2
-        - write a function that solves SBP using a breadth-first search.
-        - write a function that solves SBP using a depth-first search.
+        - write a function that solves SBP using a breadth-first search.[done]
+        - write a function that solves SBP using a depth-first search.[done]
         - write a function that solves SBP using a iterative deepenign search.
         - the main fucniton will call these function to accomplish
             -load SBP-level0.txt and execute a rando walk
