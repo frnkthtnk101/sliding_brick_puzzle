@@ -1,4 +1,10 @@
+'''
+move.py
+'''
 class move:
-    def __init__ (self, num, dir):
+    '''
+        class that holds the moves a block can do
+    '''
+    def __init__(self, num, list_dir):
         self.number = num
-        self.directions = dir
+        self.directions = list_dir
