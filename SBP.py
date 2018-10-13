@@ -10,6 +10,8 @@ def main(file_path, walk):
         breadth_search(get_file(file_path))
     elif walk == 'depth':
         depth_search(get_file(file_path))
+    elif walk == 'iterative':
+        iterative_search(get_file(file_path))
 
 
 if __name__ == "__main__":
