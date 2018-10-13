@@ -4,6 +4,7 @@ from move import move
 from state_comparison import normalize, compare
 from copy import deepcopy
 import random
+import time
 
 def random_walk(content):
     pit = puzzle_pit(content)
@@ -27,6 +28,7 @@ def random_walk(content):
                     break
 
 def breadth_search(content):
+    begining = time.time()
     pit = puzzle_pit(content)
     if content is None:
         print("no good")
@@ -45,7 +47,7 @@ def breadth_search(content):
                 fringe.append(m.number)
                 directions.append(d)
                 temp_drag = list()
-                temp_drag.append('('+str(m.number)+','+str(d)+')')
+                temp_drag.append('('+str(m.number)+','+d.replace('>','right').replace('<','left').replace('^','up').replace('v','down')+')')
                 directions_drag.append(temp_drag)
                 states.append(deepcopy(pit.clone()))
         while len(fringe) > 0:
@@ -57,8 +59,7 @@ def breadth_search(content):
             if pit.is_completed():
                 print ('\n'.join(temp_directions_drag))
                 print (pit.to_string())
-                print ('iterations      : '+str(iterations))
-                print ('new states found: '+str(new_states))
+                print (str(iterations),str(time.time()-begining),len(temp_directions_drag))
                 break
             if pit.to_string(False) not in past_states:
                 for m in predict_moves(pit.clone(),pit.height,pit.width,pit.to_string(False)):
@@ -67,17 +68,19 @@ def breadth_search(content):
                         fringe.append(m.number)
                         directions.append(d)
                         states.append(deepcopy(pit.clone()))
-                        copy_temp_directions_drag.append('('+str(m.number)+','+str(d)+')')
+                        copy_temp_directions_drag.append('('+str(m.number)+','+d.replace('>','right').replace('<','left').replace('^','up').replace('v','down')+')')
                         directions_drag.append(copy_temp_directions_drag)
                 past_states.append(pit.to_string(False))
                 new_states +=1
             iterations += 1
 
 def depth_search(content):
+    begining = time.time()
     pit = puzzle_pit(content)
     if content is None:
         print("no good")
     else:
+        begining = time.time()
         iterations = 0
         new_states = 0
         directions = list()
@@ -92,7 +95,7 @@ def depth_search(content):
                 fringe.append(m.number)
                 directions.append(d)
                 temp_drag = list()
-                temp_drag.append('('+str(m.number)+','+str(d)+')')
+                temp_drag.append('('+str(m.number)+','+d.replace('>','right').replace('<','left').replace('^','up').replace('v','down')+')')
                 directions_drag.append(temp_drag)
                 states.append(deepcopy(pit.clone()))
         while len(fringe) > 0:
@@ -104,8 +107,7 @@ def depth_search(content):
             if pit.is_completed():
                 print ('\n'.join(temp_directions_drag))
                 print (pit.to_string())
-                print ('iterations      : '+str(iterations))
-                print ('new states found: '+str(new_states))
+                print (str(iterations),str(time.time()-begining),str(len(temp_directions_drag)))
                 break
             if pit.to_string(False) not in past_states:
                 for m in predict_moves(pit.clone(),pit.height,pit.width,pit.to_string(False)):
@@ -114,13 +116,14 @@ def depth_search(content):
                         fringe.append(m.number)
                         directions.append(d)
                         states.append(deepcopy(pit.clone()))
-                        copy_temp_directions_drag.append('('+str(m.number)+','+str(d)+')')
+                        copy_temp_directions_drag.append('('+str(m.number)+','+d.replace('>','right').replace('<','left').replace('^','up').replace('v','down')+')')
                         directions_drag.append(copy_temp_directions_drag)
                 past_states.append(pit.to_string(False))
                 new_states +=1
             iterations += 1
 
 def iterative_search(content):
+    begining = time.time()
     pit = puzzle_pit(content)
     if content is None:
         print("no good")
@@ -169,15 +172,12 @@ def iterative_search(content):
                 pit.matrix = states.pop(0)
                 level += 1
                 pointer = 0
-            #print('\nold state\n'+pit.to_string(False))
+
             temp_state = pit.apply_move_clone(temp_move, temp_direction)
-            #print('\nnew state\n'+pit.to_string(False))
-            #input("continue")
             if pit.is_completed():
                 print ('\n'.join(temp_directions_drag))
                 print (pit.to_string())
-                print ('iterations      : '+str(iterations))
-                print ('new states found: '+str(new_states))
+                print (str(iterations),str(time.time()-begining),str(len(temp_directions_drag)))
                 break
             if pit.to_string(False) not in past_states:
                 for m in predict_moves(pit.clone(),pit.height,pit.width,pit.to_string(False)):
