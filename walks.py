@@ -11,6 +11,7 @@ def random_walk(content):
         print("no good")
     else:
         pit.matrix = normalize(pit.clone())
+        print(pit.to_string())
         while True:
             moves = predict_moves(pit.clone(),pit.height,pit.width,pit.to_string(False))
             random_number = random.randint(2,biggest_bloc(moves))
@@ -18,11 +19,10 @@ def random_walk(content):
                 if m.number == random_number:
                     if len(m.directions) > 0:
                         pick_direction = random.randint(0,len(m.directions)-1)
-                        print("("+str(m.number) + "," + m.directions[pick_direction] + ")")
+                        print("\n("+str(m.number) + "," + m.directions[pick_direction].replace('>','right').replace('<','left').replace('^','up').replace('v','down') + ")\n")
                         pit.apply_move(m.number,m.directions[pick_direction])
-                        #print(pit.to_string(False))
+                        print(pit.to_string())
                         if pit.is_completed():
-                            print(pit.to_string())
                             return True
                     break
 
@@ -91,9 +91,9 @@ def depth_search(content):
             for d in m.directions:
                 fringe.append(m.number)
                 directions.append(d)
-                directions_list = list()
-                directions_list.append('('+str(m.number)+','+str(d)+')')
-                directions_drag.append(directions_list)
+                temp_drag = list()
+                temp_drag.append('('+str(m.number)+','+str(d)+')')
+                directions_drag.append(temp_drag)
                 states.append(deepcopy(pit.clone()))
         while len(fringe) > 0:
             temp_directions_drag = directions_drag.pop(-1)
@@ -108,13 +108,14 @@ def depth_search(content):
                 print ('new states found: '+str(new_states))
                 break
             if pit.to_string(False) not in past_states:
-                temp_directions_drag.append('('+str(m.number)+','+str(d)+')')
                 for m in predict_moves(pit.clone(),pit.height,pit.width,pit.to_string(False)):
                     for d in m.directions:
+                        copy_temp_directions_drag = deepcopy(temp_directions_drag)
                         fringe.append(m.number)
                         directions.append(d)
                         states.append(deepcopy(pit.clone()))
-                        directions_drag.append(temp_directions_drag)
+                        copy_temp_directions_drag.append('('+str(m.number)+','+str(d)+')')
+                        directions_drag.append(copy_temp_directions_drag)
                 past_states.append(pit.to_string(False))
                 new_states +=1
             iterations += 1
@@ -141,9 +142,9 @@ def iterative_search(content):
             for d in m.directions:
                 fringe.append(m.number)
                 directions.append(d)
-                directions_list = list()
-                directions_list.append('('+str(m.number)+','+str(d)+')')
-                directions_drag.append(directions_list)
+                temp_drag = list()
+                temp_drag.append('('+str(m.number)+','+str(d)+')')
+                directions_drag.append(temp_drag)
                 states.append(deepcopy(pit.clone()))
                 level_list.append([level ,level_directions])
                 level_directions += 1
@@ -179,15 +180,16 @@ def iterative_search(content):
                 print ('new states found: '+str(new_states))
                 break
             if pit.to_string(False) not in past_states:
-                temp_directions_drag.append('('+str(m.number)+','+str(d)+')')
                 for m in predict_moves(pit.clone(),pit.height,pit.width,pit.to_string(False)):
                     level_directions = 0
                     for d in m.directions:
+                        copy_temp_directions_drag = deepcopy(temp_directions_drag)
                         fringe.append(m.number)
                         directions.append(d)
                         states.append(deepcopy(pit.clone()))
-                        directions_drag.append(temp_directions_drag)
-                        level_list.append([temp_level_list[0]+1,level_directions])
+                        copy_temp_directions_drag.append('('+str(m.number)+','+str(d)+')')
+                        directions_drag.append(copy_temp_directions_drag)
+                        level_list.append([level+1,level_directions])
                         level_directions += 1
                 past_states.append(pit.to_string(False))
                 new_states +=1
