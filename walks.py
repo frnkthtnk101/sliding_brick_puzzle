@@ -167,7 +167,9 @@ def iterative_search(content):
                 fringe.append(move_tuple.number)
                 directions.append(directions_tuple)
                 temp_drag = list()
-                temp_drag.append('('+str(move_tuple.number)+','+str(directions_tuple)+')')
+                temp_drag.append('('+str(move_tuple.number)+','+str(directions_tuple)\
+                .replace('>', 'right').replace('<', 'left') \
+                .replace('^', 'up').replace('v', 'down') + ')')
                 directions_drag.append(temp_drag)
                 states.append(deepcopy(pit.clone()))
                 level_list.append([level, level_directions])
