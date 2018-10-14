@@ -210,7 +210,9 @@ def iterative_search(content):
                         directions.append(directions_tuple)
                         states.append(deepcopy(pit.clone()))
                         copy_temp_directions_drag.append\
-                        ('('+str(move_tuple.number)+','+str(directions_tuple)+')')
+                        ('('+str(move_tuple.number)+','+str(directions_tuple)\
+                        .replace('>', 'right').replace('<', 'left') \
+                        .replace('^', 'up').replace('v', 'down') + ')')
                         directions_drag.append(copy_temp_directions_drag)
                         level_list.append([level + 1, level_directions])
                         level_directions += 1
